@@ -1,4 +1,4 @@
-package com.bonnemai.kafka;
+package com.bonnemai.listener;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -21,8 +21,7 @@ public class Listener implements CommandLineRunner {
     static Logger logger = LoggerFactory.getLogger(Listener.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(Listener.class, args);
-//        SpringApplication.run(Listener.class, args).close();
+        SpringApplication.run(Listener.class, args).close();
     }
 
     @Autowired

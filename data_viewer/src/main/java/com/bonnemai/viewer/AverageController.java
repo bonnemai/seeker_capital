@@ -20,5 +20,4 @@ public class AverageController {
         model.addAttribute("nbs", nbs);
         return "average";
     }
-
 }

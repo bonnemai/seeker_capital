@@ -1,4 +1,4 @@
-package com.bonnemai.kafka;
+package com.bonnemai.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 public class AverageService {
-    static Logger logger = LoggerFactory.getLogger(Listener.class);
+    static Logger logger = LoggerFactory.getLogger(com.bonnemai.listener.Listener.class);
 
     @RequestMapping(value = "/average", method = RequestMethod.GET)
-    public Double average(@RequestParam(value="avg", defaultValue="3") String nb) {
+    public Double average(@RequestParam(value="avg", defaultValue="3") String nb) throws Exception {
         logger.info("Computing the Average");
         List<Double> theList=new ArrayList<>();
         Integer nbInt=Integer.parseInt(nb);
@@ -28,11 +28,12 @@ public class AverageService {
                 }
             } else {
                 logger.warn("Not enough values in the list. Please come back later or use a smaller nb.");
-//                throw new Exception("Not enough values in the list. Please come back later or use a smaller nb.");
+                throw new Exception("Not enough values in the list. Please come back later or use a smaller nb.");
             }
+
         } else {
                 logger.warn("nb Should be positive");
-//                throw new Exception("nb Should be positive");
+                throw new Exception("nb Should be positive");
         }
 
         return sum/nbInt;

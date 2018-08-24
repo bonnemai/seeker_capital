@@ -1,6 +1,5 @@
-package com.bonnemai.kafka;
+package com.bonnemai.listener;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import java.util.List;
 
 public interface Repository extends MongoRepository<DoubleValue, String> {
 }

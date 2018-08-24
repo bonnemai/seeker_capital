@@ -1,4 +1,4 @@
-package com.bonnemai.kafka;
+package com.bonnemai.listener;
 
 import org.springframework.data.annotation.Id;
 
