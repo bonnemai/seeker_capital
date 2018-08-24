@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="'Result: ' + ${result} + '!'" />
+
+    <form method="get" action="average">
+        <input type="number" min="1" name="nb" value=th:text="${nb}">
+        <textarea name="nbs">th:text="${nbs}"</textarea>
+    </form>
+</body>
+</html>
