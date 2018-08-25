@@ -28,12 +28,17 @@ public class Producer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Random rand = new Random();
+        double i=0;
         while (true) {
-            int  n = rand.nextInt(60) ;
-            logger.info("Sending & Sleeping: {}",n);
+            int n = rand.nextInt(60);
             this.template.send("test", String.valueOf(n));
-            latch.await(10*n, TimeUnit.SECONDS);
-            Thread.sleep(1000*n);
+            if (i++ > 4) {
+                logger.info("Sending & Sleeping: {}", n);
+                latch.await(10 * n, TimeUnit.SECONDS);
+                Thread.sleep(1000 * n);
+            }else{
+                logger.info("Sending: {}", n);
+            }
         }
     }
 }

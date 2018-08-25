@@ -9,12 +9,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+@RestController
 @SpringBootApplication
 public class Listener implements CommandLineRunner {
 
@@ -53,5 +58,47 @@ public class Listener implements CommandLineRunner {
 
     public List<Integer> getValues() {
         return values;
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/average", method = RequestMethod.GET)
+    public Double average(@RequestParam(value="avg", defaultValue="3") String nb) throws Exception {
+        logger.info("Computing the Average");
+//        List<Double> theList=new ArrayList<>();
+        Integer nbInt=Integer.parseInt(nb);
+        Double sum=0d;
+
+        if (nbInt > 0) {
+            if (values.size()>=nbInt) {
+                for (int i = values.size() - nbInt; i < values.size(); i++) {
+                    sum += values.get(i);
+                }
+            } else {
+                throw new Exception(String.format("Got only {} values in the list. This is not enough. Please come back later or use a smaller nb.",  values.size()));
+            }
+        } else {
+            throw new Exception("nb Should be positive");
+        }
+
+        return sum/nbInt;
+    }
+
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String error() {
+        logger.info("Error");
+        return "Error";
+    }
+
+
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index() {
+        logger.info("Index Page");
+        return "Hi There";
     }
 }
