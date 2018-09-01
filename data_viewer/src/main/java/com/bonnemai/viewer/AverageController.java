@@ -29,12 +29,10 @@ public class AverageController {
         RestTemplate restTemplate = new RestTemplate();
         Double result = null;
         try {
-            String currentUrl = "http://localhost:8090/average";
+            String currentUrl = "http://localhost:8090/average?nb="+nb;
 
             logger.info("Now calling URL: "+ currentUrl);
             Map<String, String> map=new HashMap<>();
-            map.put("nb", nb);
-//            result = restTemplate.getForObject(new URI(currentUrl), Double.class);
             result = restTemplate.getForObject(currentUrl, Double.class, map);
             if (result ==null){result=-1d;}
             logger.info("Got Results {}", result);
