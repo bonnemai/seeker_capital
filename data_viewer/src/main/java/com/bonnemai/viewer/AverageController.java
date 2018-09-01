@@ -40,16 +40,12 @@ public class AverageController {
             logger.warn("Could not get Average from Average Service", e);
         }
         model.addAttribute("result", result);
+        model.addAttribute("nb", nb);
         return "average";
     }
 
     @GetMapping("/error")
     public String error(Model model) {
         return "error";
-    }
-
-    @GetMapping("/test")
-    public String test(Model model) {
-        return "test";
     }
 }

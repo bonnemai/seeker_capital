@@ -60,15 +60,9 @@ public class Listener implements CommandLineRunner {
         return values;
     }
 
-
-
-
-
-
     @RequestMapping(value = "/average", method = RequestMethod.GET)
-    public Double average(@RequestParam(value="avg", defaultValue="3") String nb) throws Exception {
-        logger.info("Computing the Average");
-//        List<Double> theList=new ArrayList<>();
+    public Double average(@RequestParam(value="nb", defaultValue="3") String nb) throws Exception {
+        logger.info("Computing the Average of the last {} values", nb);
         Integer nbInt=Integer.parseInt(nb);
         Double sum=0d;
 
@@ -78,7 +72,7 @@ public class Listener implements CommandLineRunner {
                     sum += values.get(i);
                 }
             } else {
-                throw new Exception(String.format("Got only {} values in the list. This is not enough. Please come back later or use a smaller nb.",  values.size()));
+                throw new Exception(String.format("Got only %d values in the list. This is not enough. Please come back later or use a smaller nb.",  values.size()));
             }
         } else {
             throw new Exception("nb Should be positive");
@@ -88,13 +82,15 @@ public class Listener implements CommandLineRunner {
     }
 
 
+    /**
+     * Not working yet...
+     * @return
+     */
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String error() {
         logger.info("Error");
         return "Error";
     }
-
-
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
