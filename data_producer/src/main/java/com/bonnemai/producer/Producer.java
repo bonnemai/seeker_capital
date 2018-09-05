@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 public class Producer implements CommandLineRunner {
-    static Logger logger = LoggerFactory.getLogger(Producer.class);
+    private static Logger logger = LoggerFactory.getLogger(Producer.class);
 
     public static void main(String[] args) {
         SpringApplication.run(Producer.class, args).close();
@@ -27,6 +27,10 @@ public class Producer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        send();
+    }
+
+    void send() throws InterruptedException {
         Random rand = new Random();
         double i=0;
         while (true) {
@@ -40,5 +44,13 @@ public class Producer implements CommandLineRunner {
                 logger.info("Sending: {}", n);
             }
         }
+    }
+
+    public void setTemplate(KafkaTemplate<String, String> template) {
+        this.template = template;
+    }
+
+    public CountDownLatch getLatch() {
+        return latch;
     }
 }
