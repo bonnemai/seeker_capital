@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 public class Listener implements CommandLineRunner {
 
-    static Logger logger = LoggerFactory.getLogger(Listener.class);
+    private static Logger logger = LoggerFactory.getLogger(Listener.class);
 
     public static void main(String[] args) {
         SpringApplication.run(Listener.class, args).close();
@@ -47,7 +47,7 @@ public class Listener implements CommandLineRunner {
     }
 
     @KafkaListener(topics = "test")
-    public void listen(ConsumerRecord<?, ?> cr) throws Exception {
+    public void listen(ConsumerRecord<?, ?> cr) {
         logger.info(String.format("Value: %s, Timestamp %s", cr.value(), cr.timestamp()));
         int intValue=Integer.parseInt(String.valueOf(cr.value()));
         DoubleValue dv=new DoubleValue(intValue, cr.timestamp());
@@ -56,8 +56,9 @@ public class Listener implements CommandLineRunner {
         latch.countDown();
     }
 
-    public List<Integer> getValues() {
-        return values;
+
+    public void setValues(List<Integer> values) {
+        this.values = values;
     }
 
     @RequestMapping(value = "/average", method = RequestMethod.GET)
@@ -83,7 +84,6 @@ public class Listener implements CommandLineRunner {
 
 
     /**
-     * Not working yet...
      * @return
      */
     @RequestMapping(value = "/error", method = RequestMethod.GET)
