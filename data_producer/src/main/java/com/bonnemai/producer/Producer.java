@@ -27,16 +27,35 @@ public class Producer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        send();
+        if (args == null) {
+            send();
+        }else {
+           sendOne(1);
+        }
     }
 
     void send() throws InterruptedException {
-        Random rand = new Random();
         double i=0;
         while (true) {
-            int n = rand.nextInt(60);
+            sendOne(i++);
+            //            int n = rand.nextInt(60);
+//            this.template.send("test", String.valueOf(n));
+//            if (i++ > 4) {
+//                logger.info("Sending & Sleeping: {}", n);
+//                latch.await(10 * n, TimeUnit.SECONDS);
+//                Thread.sleep(1000 * n);
+//            }else{
+//                logger.info("Sending: {}", n);
+//            }
+        }
+    }
+
+    void sendOne( double i) throws InterruptedException {
+        Random rand = new Random();
+
+        int n = rand.nextInt(60);
             this.template.send("test", String.valueOf(n));
-            if (i++ > 4) {
+            if (i > 4) {
                 logger.info("Sending & Sleeping: {}", n);
                 latch.await(10 * n, TimeUnit.SECONDS);
                 Thread.sleep(1000 * n);
@@ -44,7 +63,7 @@ public class Producer implements CommandLineRunner {
                 logger.info("Sending: {}", n);
             }
         }
-    }
+
 
     public void setTemplate(KafkaTemplate<String, String> template) {
         this.template = template;
