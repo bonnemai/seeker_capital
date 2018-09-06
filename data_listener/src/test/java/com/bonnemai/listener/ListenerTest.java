@@ -16,7 +16,7 @@ import java.util.Arrays;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ListenerTest {
     private MockMvc mvc;
-    Listener listener=new Listener();
+    private Listener listener=new Listener();
 
     @Before
     public void setup() {

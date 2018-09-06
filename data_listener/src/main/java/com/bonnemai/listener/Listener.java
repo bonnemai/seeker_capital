@@ -52,7 +52,7 @@ public class Listener implements CommandLineRunner {
         int intValue=Integer.parseInt(String.valueOf(cr.value()));
         DoubleValue dv=new DoubleValue(intValue, cr.timestamp());
         repository.save(dv);
-        values.add(Integer.valueOf(intValue));
+        values.add(intValue);
         latch.countDown();
     }
 
